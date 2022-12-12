@@ -1,4 +1,1 @@
-Welcome to my Github!
-
----
-This repository is made for practicing "Open source SW"
+>>>>>>> 0681bdfba3d71b1b320a6842619a0b0af5cbeda3
