@@ -19,20 +19,20 @@ detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
 
 image = cv2.imread(image_file)
-gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+# gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-rects = detector(gray, 1)
-print("Number of faces detected: {}".format(len(rects)))
+# rects = detector(gray, 1)
+# print("Number of faces detected: {}".format(len(rects)))
 
-for (i, rect) in enumerate(rects):
-    points = np.matrix([[p.x, p.y] for p in predictor(gray, rect).parts()])
-    show_parts = points[ALL]
-    for (i, point) in enumerate(show_parts):
-        x = point[0,0]
-        y = point[0,1]
-        cv2.circle(image, (x, y), 1, (0, 255, 255), -1)
-        cv2.putText(image, "{}".format(i + 1), (x, y - 2),
-		cv2.FONT_HERSHEY_SIMPLEX, 0.3, (0, 255, 0), 1)
+# for (i, rect) in enumerate(rects):
+#     points = np.matrix([[p.x, p.y] for p in predictor(gray, rect).parts()])
+#     show_parts = points[ALL]
+#     for (i, point) in enumerate(show_parts):
+#         x = point[0,0]
+#         y = point[0,1]
+#         cv2.circle(image, (x, y), 1, (0, 255, 255), -1)
+#         cv2.putText(image, "{}".format(i + 1), (x, y - 2),
+# 		cv2.FONT_HERSHEY_SIMPLEX, 0.3, (0, 255, 0), 1)
 
 cv2.imshow("Face Landmark", image)
 cv2.waitKey(0)
