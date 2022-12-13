@@ -118,3 +118,38 @@ for p in range(0, len(routes1) - 1):
     img = cv2.line(img, from_coordinate, to_coordinate, (255, 255, 0), 1)
 
 # Extract Facial area
+mask = np.zeros((img.shape[0], img.shape[1]))
+mask = cv2.fillConvexPoly(mask, np.array(routes), 1)
+mask = mask.astype(np.bool_)
+
+out = np.zeros_like(img)
+out[mask] = img[mask]
+
+mask1 = np.zeros((img.shape[0], img.shape[1]))
+mask1 = cv2.fillConvexPoly(mask1, np.array(routes1), 1)
+mask1 = mask1.astype(np.bool_)
+
+out1 = np.zeros_like(img)
+out1[mask1] = img[mask1]
+
+# out —> 얼굴 형태 따놓은 상태
+# out 좌표 움직여서 얼굴 변경
+
+Hori = np.concatenate((out, out1), axis=1)
+cv2.imwrite("out.jpg", Hori)
+
+img_c = cv2.imread('out.jpg')
+  
+h, w, channels = img_c.shape
+half = w//2
+  
+left_part = img_c[:, :half] 
+right_part = img_c[:, half:]  
+
+cv2.imshow('Person 1', left_part)
+cv2.imshow('The other person', right_part)
+
+cv2.imwrite('P1.jpg', right_part)
+cv2.imwrite('P2.jpg', left_part)
+
+cv2.waitKey(0)
