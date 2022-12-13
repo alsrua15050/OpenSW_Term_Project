@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
+# 얼굴 라인 따기 출처 (https://a292run.tistory.com/entry/Facial-Landmarks-for-Face-Recognition-with-Dlib-1)
 face_detector = dlib.get_frontal_face_detector()
 landmark_detector = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
 
@@ -79,7 +80,7 @@ for i in range(0, len(routes)-1):
    to_coordinate = routes[i+1]
    img = cv2.line(img, from_coordinate, to_coordinate, (255, 255, 0), 1)
 
-# ---------------- 다른 루트
+# ---------------- another face detect
 routes1 = []
 
 for p in range(42, 26, -1):
@@ -131,13 +132,12 @@ mask1 = mask1.astype(np.bool_)
 
 out1 = np.zeros_like(img)
 out1[mask1] = img[mask1]
+# out(1) —> status that face line was detected
 
-# out —> 얼굴 형태 따놓은 상태
-# out 좌표 움직여서 얼굴 변경
-
-Hori = np.concatenate((out, out1), axis=1)
+Hori = np.concatenate((out, out1), axis=1) # append image
 cv2.imwrite("out.jpg", Hori)
 
+# split image (Detect person one by one)
 img_c = cv2.imread('out.jpg')
   
 h, w, channels = img_c.shape
